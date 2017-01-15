@@ -1,0 +1,61 @@
+diff --git a/lisp/cus-start.el b/lisp/cus-start.el
+index d9ad0a5..9e52d0f 100644
+--- a/lisp/cus-start.el
++++ b/lisp/cus-start.el
+@@ -446,6 +446,7 @@ minibuffer-prompt-properties--setter
+ 	     (ns-use-native-fullscreen ns boolean "24.4")
+              (ns-use-fullscreen-animation ns boolean "25.1")
+              (ns-use-srgb-colorspace ns boolean "24.4")
++             (ns-use-titled-windows ns boolean "25.1")
+ 	     ;; process.c
+ 	     (delete-exited-processes processes-basics boolean)
+ 	     ;; syntax.c
+diff --git a/src/nsterm.m b/src/nsterm.m
+index 1b44a73..d013101 100644
+--- a/src/nsterm.m
++++ b/src/nsterm.m
+@@ -6775,11 +6775,13 @@ - (BOOL)isOpaque
+   maximizing_resize = NO;
+ #endif
+
+-  win = [[EmacsWindow alloc]
++  win = [[EmacsFSWindow alloc]
+             initWithContentRect: r
+                       styleMask: (NSResizableWindowMask |
+ #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
+-                                  NSTitledWindowMask |
++                                  (ns_use_titled_windows ?
++                                   NSTitledWindowMask :
++                                   NSWindowStyleMaskBorderless) |
+ #endif
+                                   NSMiniaturizableWindowMask |
+                                   NSClosableWindowMask)
+@@ -6812,6 +6814,7 @@ - (BOOL)isOpaque
+   [win setTitle: name];
+
+   /* toolbar support */
++  if ( ns_use_titled_windows ) {
+   toolbar = [[EmacsToolbar alloc] initForView: self withIdentifier:
+                          [NSString stringWithFormat: @"Emacs Frame %d",
+                                    ns_window_num]];
+@@ -6833,6 +6836,7 @@ This avoids an extra clear and redraw (flicker) at frame creation.  */
+   }
+ #endif
+   FRAME_TOOLBAR_HEIGHT (f) = 0;
++  }
+
+   tem = f->icon_name;
+   if (!NILP (tem))
+@@ -8759,6 +8763,12 @@ Nil means use fullscreen the old (< 10.7) way.  The old way works better with
+ This variable is ignored on OSX < 10.7 and GNUstep.  */);
+   ns_use_srgb_colorspace = YES;
+
++  DEFVAR_BOOL ("ns-use-titled-windows", ns_use_titled_windows,
++     doc: /*Non-nil means to include a title on windows.  Nil means to
++omit the title on OSX >= 10.7.  This variable is ignored on OSX <
++10.7.  Default is nil.  */);
++  ns_use_titled_windows = NO;
++
+   /* TODO: move to common code */
+   DEFVAR_LISP ("x-toolkit-scroll-bars", Vx_toolkit_scroll_bars,
+ 	       doc: /* Which toolkit scroll bars Emacs uses, if any.
