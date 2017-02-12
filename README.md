@@ -1,4 +1,7 @@
+Now available as an installation flag for the homebrew formula [emacs-plus](https://github.com/d12frosted/homebrew-emacs-plus): `brew install emacs-plus --with-no-title-bars`.
+
 A (barely) modified version of [a patch by Jay McCarthy](https://lists.gnu.org/archive/html/bug-gnu-emacs/2016-10/msg00003.html) to provide a variable--`ns-use-title-bar`--allowing [GNU Emacs (when running on OS X)](https://github.com/braham-snyder/homebrew-emacs-plus) to elide the OS X title bar of its frames. This is also known as a "borderless" window:
+
 
 ```
 Non-nil means to include the title bar on frames.  Nil means to
