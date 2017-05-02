@@ -6,12 +6,12 @@ A (barely) modified version of [a patch by Jay McCarthy](https://lists.gnu.org/a
 ```
 Non-nil to include the title bar on frames.
 Nil to omit the title bar on OSX >= 10.7. This variable is
-ignored on OSX < 10.7. Note that the first frame per session
-(unless it is an emacsclient frame connecting to emacs
---daemon) will ignore (!) the user-set value of this variable,
-using the default value of this variable (nil--do not include a
-title bar). This is almost certainly due to a bug in the patch
-adding this variable. Default is nil.
+ignored on OSX < 10.7. Note that the first frame per
+session (unless that frame is an emacsclient) will ignore (!) the
+user-set value of this variable, and instead use the default
+value of this variable (nil--do not include a title bar). This is
+almost certainly due to a bug in the patch adding this variable.
+Default is nil.
 ```
 
 ![screen shot](https://i.imgur.com/cR57gkl.png)
