@@ -31,7 +31,7 @@ I know very little about the code this patch changes -- I merely had to relocate
     * `brew prune`
     * `brew cleanup`
     * `brew uninstall emacs-plus` (I've heard but not tested that `brew reinstall <formula>` can silently cache flags)
-    * `brew install --with-no-title-bars [<any other flags>] emacs-plus`
+    * `brew install emacs-plus --with-no-title-bars [<any other flags>]`
 * if not using homebrew:
   * perhaps try roughly equivalent steps (to the prenominate `brew` commands) -- e.g., just downloading a fresh GNU Emacs copy, ensuring you're attempting to patch the correct copy of Emacs, ensuring you're opening the correct copy of Emacs, etc.
 * else:
