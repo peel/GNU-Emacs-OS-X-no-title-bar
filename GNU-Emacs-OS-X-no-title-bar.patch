@@ -14,11 +14,14 @@ diff --git a/src/nsterm.m b/src/nsterm.m
 index 1b44a73..d013101 100644
 --- a/src/nsterm.m
 +++ b/src/nsterm.m
-@@ -6775,11 +6775,13 @@ - (BOOL)isOpaque
+@@ -6775,11 +6775,16 @@ - (BOOL)isOpaque
    maximizing_resize = NO;
  #endif
 
 -  win = [[EmacsWindow alloc]
++ #if MAC_OS_X_VERSION_MAX_ALLOWED < 101200
++ #define NSWindowStyleMaskBorderless NSBorderlessWindowMask
++ #endif
 +  win = [[EmacsFSWindow alloc]
              initWithContentRect: r
                        styleMask: (NSResizableWindowMask |
